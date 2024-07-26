@@ -1,0 +1,34 @@
+import heapq
+def dijkstra(graph, source):
+  pq = [(0, source )]
+  (distance,vertex)
+  distances = {vertex: float('inf') for vertex in graph}
+  distances[source] = 0
+  previous_vertices = {vertex: None for vertex in graph}
+
+  while pq:
+    current_distance, current_vertex = heapq.heappop(pq)
+    if current_distance > distances[current_vertex]:
+      continue
+    for neighbor, weight in graph[current_vertex].items():
+      distance = current_distance + weight
+      if distance < distances[neighbor]:
+        distances[neighbor] = distance
+        previous_vertices[neighbor] = current_vertex
+        heapq.heappush(pq, (distance, neighbor))
+
+  return distances, previous_vertices
+
+def  get_shortest_path(previous_vertices, start,end):
+  path = []
+  current_vertex = end
+  while current_vertex is not None:
+    path.append(current_vertex)
+    current_vertex = previous_vertices[current_vertex]  
+  path.reverse()
+return path if path[0]==start else []
+
+source='A'
+distance,previous_vertices = dijkstra(graph, source)
+
+print(f"Shortest path from {source} to all other vertices:")
